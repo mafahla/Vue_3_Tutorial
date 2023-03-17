@@ -1,5 +1,17 @@
 <template>
-<SignUpForm />
+  <div class="h-100">
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-3 vue-bg d-flex justify-content-center align-items-center h-100">
+           <img src="./assets/logo.png" alt="">
+          </div>
+          <div class="col-md-9 h-100">
+              <SignUpForm />
+          </div>
+      </div>
+    </div>
+
+</div>
 </template>
 
 <script>
