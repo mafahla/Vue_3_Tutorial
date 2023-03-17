@@ -5,6 +5,7 @@
 
     <label>Password:</label>
     <input type="password" required v-model="passowrd" />
+    <div class="error" v-if="passwordError">{{ passwordError }}</div>
 
     <label>Role:</label>
     <select v-model="role">
@@ -25,9 +26,7 @@
     <div class="submit">
       <button>Create Account</button>
     </div>
-
   </form>
-  <p>email:{{ skill }}</p>
 </template>
 
 <script>
@@ -40,6 +39,7 @@ export default {
       terms: false,
       tempSkill: "",
       skills: [],
+      passwordError: "",
     };
   },
   methods: {
@@ -56,9 +56,14 @@ export default {
         return skill !== item;
       });
     },
-    handleSubmit(){
-        console.log("form Submitted")
+    handleSubmit() {
+      this.passwordError =
+        this.passowrd.length > 5 ? "" : "Password must be 6 charecters long";
+    
+    if(!this.passwordError){
+          console.log("form Submitted");
     }
+    },
   },
 };
 </script>
@@ -120,5 +125,11 @@ button {
 }
 .submit {
   text-align: center;
+}
+.error{
+    color: red;
+    margin-top:20px;
+    font-size: 0.8em;
+    font-weight: bold;
 }
 </style>
