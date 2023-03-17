@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
     <label>Email:</label>
     <input type="email" required v-model="email" />
 
@@ -8,12 +8,26 @@
 
     <label>Role:</label>
     <select v-model="role">
-        <option value="developer">developer</option>
-        <option value="designer">web designer</option>
-
+      <option value="developer">developer</option>
+      <option value="designer">web designer</option>
     </select>
+
+    <label>Skills:</label>
+    <input type="text" v-model="tempSkill" @keyup="addSkills" />
+    <div v-for="skill in skills" :key="skill" class="pill">
+      <span @click="deleteSkill(skill)">{{ skill }}</span>
+    </div>
+
+    <div class="terms">
+      <input type="checkbox" v-model="terms" required />
+      <label>Accept Terms and Conditions</label>
+    </div>
+    <div class="submit">
+      <button>Create Account</button>
+    </div>
+
   </form>
-  <!-- <p>email:{{ email }}</p> -->
+  <p>email:{{ skill }}</p>
 </template>
 
 <script>
@@ -22,8 +36,29 @@ export default {
     return {
       email: "",
       passowrd: "",
-      role: 'designer'
+      role: "designer",
+      terms: false,
+      tempSkill: "",
+      skills: [],
     };
+  },
+  methods: {
+    addSkills(e) {
+      if (e.key === "," && this.tempSkill) {
+        if (!this.skills.includes(this.tempSkill)) {
+          this.skills.push(this.tempSkill);
+        }
+        this.tempSkill = "";
+      }
+    },
+    deleteSkill(skill) {
+      this.skills = this.skills.filter((item) => {
+        return skill !== item;
+      });
+    },
+    handleSubmit(){
+        console.log("form Submitted")
+    }
   },
 };
 </script>
@@ -46,7 +81,8 @@ label {
   letter-spacing: 1px;
   font-weight: bold;
 }
-input , select{
+input,
+select {
   display: block;
   padding: 10px 6px;
   width: 100%;
@@ -55,11 +91,34 @@ input , select{
   border-bottom: 1px solid #ddd;
   color: #555;
 }
-input[type="checkbox"]{
-display: inline-block;
-width: 16px;
-margin: 0 10px 0 0;
-position: relative;
-top: 2px;
+input[type="checkbox"] {
+  display: inline-block;
+  width: 16px;
+  margin: 0 10px 0 0;
+  position: relative;
+  top: 2px;
+}
+.pill {
+  display: inline-block;
+  margin: 20px 10px 0 0;
+  padding: 6px 12px;
+  background: #eee;
+  border-radius: 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: #777;
+  cursor: pointer;
+}
+button {
+  background: blue;
+  border: 0;
+  padding: 10px 20px;
+  margin-top: 20px;
+  color: white;
+  border-radius: 20px;
+}
+.submit {
+  text-align: center;
 }
 </style>
